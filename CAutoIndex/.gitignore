@@ -1,0 +1,7 @@
+#Reverse the parent 'ignore all'
+!*
+
+/vendor/
+/logs/*
+/cache/*
+composer.lock

@@ -1,0 +1,227 @@
+/* Sticky footer styles */
+html, body {
+    height: 100%;
+}
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -41px;
+    padding: 0 0 41px;
+}
+#wrap .container, #footer .container {
+    /*min-width: 600px;*/
+}
+#footer {
+    height: 41px;
+}
+#footer hr {
+    margin:0 0 10px;
+}
+
+/* Main Styles */
+.page-header {
+    min-height:54px;
+    position:relative;
+    overflow:hidden;
+    margin-top: 20px;
+}
+.page-header h1 {
+    position:absolute;
+    margin:0;
+    font-size: 32px;
+}
+.page-header h1 a:focus {
+    outline:0;
+}
+
+#list {
+    overflow:hidden;
+    position:relative;
+    margin-bottom:10px;
+}
+    #list .table-responsive {
+        position:absolute;
+        width:100%;
+    }
+    #list .table-responsive table {
+        margin: 0;
+    }
+    #list .table-responsive table th .glyphicon {
+        font-size:12px;
+    }
+    #list .panel-heading {
+        height:38px;
+    }
+    #list .panel-heading h3 {
+        height: 18px;
+        overflow: hidden;
+    }
+    #list .panel-loader {
+        display:none;
+        background: url(./../img/loader.gif) no-repeat;
+        width:43px;
+        height:11px;
+        position:absolute;
+        top:13px;
+        left:50%;
+        margin-left:-22px;
+    }
+
+iframe, #source {
+    margin:0;
+    width:100%;
+    border:0;
+}
+.status-error .status-ico, .status-symlink .status-ico {
+    width:16px;
+    height:16px;
+    display:block;
+    position:absolute;
+    margin:5px 0 0 1px;
+    background: url(./../img/status-symlink.png) no-repeat;
+}
+.status-error .status-ico {
+    background-image: url(./../img/status-error.png);
+}
+.status-error a {
+    color: #B94A48;
+}
+
+/* FIX syntax highlighter*/
+.syntaxhighlighter table td.code .container:before, .syntaxhighlighter table td.code .container:after {
+    display: block !important;
+}
+
+/* Max width in medium/small sizes */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+/* Sprite icons */
+.ico-3gp, .ico-7z, .ico-ace, .ico-ai, .ico-aif, .ico-aiff, .ico-amr, .ico-asf, 
+.ico-asx, .ico-bat, .ico-bin, .ico-bmp, .ico-bup, .ico-cab, .ico-cbr, .ico-cda, 
+.ico-cdl, .ico-cdr, .ico-chm, .ico-code, .ico-css, .ico-dat, .ico-dir, 
+.ico-divx, .ico-dll, .ico-dmg, .ico-doc, .ico-dss, .ico-dvf, .ico-dwg, .ico-eml, 
+.ico-eps, .ico-exe, .ico-file, .ico-fla, .ico-flv, .ico-gif, .ico-gz, .ico-hqx, 
+.ico-htaccess, .ico-htm, .ico-html, .ico-ifo, .ico-iframe, .ico-indd, .ico-iso, 
+.ico-jar, .ico-jpeg, .ico-jpg, .ico-js, .ico-json, .ico-lnk, .ico-log, .ico-m4a, 
+.ico-m4b, .ico-m4p, .ico-m4v, .ico-mcd, .ico-mdb, .ico-mid, .ico-mov, .ico-mp2, 
+.ico-mp4, .ico-mpeg, .ico-mpg, .ico-msi, .ico-mswmm, .ico-ogg, .ico-open, 
+.ico-pdf, .ico-photo, .ico-php, .ico-png, .ico-pps, .ico-ps, .ico-psd, .ico-pst, 
+.ico-ptb, .ico-pub, .ico-qbb, .ico-qbw, .ico-qxd, .ico-ram, .ico-rar, .ico-rm, 
+.ico-rmvb, .ico-rtf, .ico-sea, .ico-ses, .ico-sit, .ico-sitx, .ico-ss, .ico-swf, 
+.ico-tgz, .ico-thm, .ico-tif, .ico-tmp, .ico-torrent, .ico-ttf, .ico-txt, 
+.ico-vcd, .ico-vob, .ico-wav, .ico-wma, .ico-wmv, .ico-wps, .ico-xls, .ico-xpi, 
+.ico-zip { display:inline-block; background: url(./../img/sprite.png) no-repeat 0 0; width:16px; height:16px; vertical-align:middle; }
+.ico-3gp { background-position: 0 0px }
+.ico-7z { background-position: 0 -21px }
+.ico-ace { background-position: 0 -42px }
+.ico-ai { background-position: 0 -63px }
+.ico-aif { background-position: 0 -84px }
+.ico-aiff { background-position: 0 -105px }
+.ico-amr { background-position: 0 -126px }
+.ico-asf { background-position: 0 -147px }
+.ico-asx { background-position: 0 -168px }
+.ico-bat { background-position: 0 -189px }
+.ico-bin { background-position: 0 -210px }
+.ico-bmp { background-position: 0 -231px }
+.ico-bup { background-position: 0 -252px }
+.ico-cab { background-position: 0 -273px }
+.ico-cbr { background-position: 0 -294px }
+.ico-cda { background-position: 0 -315px }
+.ico-cdl { background-position: 0 -336px }
+.ico-cdr { background-position: 0 -357px }
+.ico-chm { background-position: 0 -378px }
+.ico-code { background-position: 0 -399px }
+.ico-css { background-position: 0 -420px }
+.ico-dat { background-position: 0 -441px }
+.ico-dir { background-position: 0 -462px }
+.ico-divx { background-position: 0 -483px }
+.ico-dll { background-position: 0 -504px }
+.ico-dmg { background-position: 0 -525px }
+.ico-doc { background-position: 0 -546px }
+.ico-dss { background-position: 0 -567px }
+.ico-dvf { background-position: 0 -588px }
+.ico-dwg { background-position: 0 -609px }
+.ico-eml { background-position: 0 -630px }
+.ico-eps { background-position: 0 -651px }
+.ico-exe { background-position: 0 -672px }
+.ico-file { background-position: 0 -693px }
+.ico-fla { background-position: 0 -714px }
+.ico-flv { background-position: 0 -735px }
+.ico-gif { background-position: 0 -756px }
+.ico-gz { background-position: 0 -777px }
+.ico-hqx { background-position: 0 -798px }
+.ico-htaccess { background-position: 0 -819px }
+.ico-htm { background-position: 0 -840px }
+.ico-html { background-position: 0 -861px }
+.ico-ifo { background-position: 0 -882px }
+.ico-iframe { background-position: 0 -903px }
+.ico-indd { background-position: 0 -924px }
+.ico-iso { background-position: 0 -945px }
+.ico-jar { background-position: 0 -966px }
+.ico-jpeg { background-position: 0 -987px }
+.ico-jpg { background-position: 0 -1008px }
+.ico-js { background-position: 0 -1029px }
+.ico-json { background-position: 0 -1050px }
+.ico-lnk { background-position: 0 -1071px }
+.ico-log { background-position: 0 -1092px }
+.ico-m4a { background-position: 0 -1113px }
+.ico-m4b { background-position: 0 -1134px }
+.ico-m4p { background-position: 0 -1155px }
+.ico-m4v { background-position: 0 -1176px }
+.ico-mcd { background-position: 0 -1197px }
+.ico-mdb { background-position: 0 -1218px }
+.ico-mid { background-position: 0 -1239px }
+.ico-mov { background-position: 0 -1260px }
+.ico-mp2 { background-position: 0 -1281px }
+.ico-mp4 { background-position: 0 -1302px }
+.ico-mpeg { background-position: 0 -1323px }
+.ico-mpg { background-position: 0 -1344px }
+.ico-msi { background-position: 0 -1365px }
+.ico-mswmm { background-position: 0 -1386px }
+.ico-ogg { background-position: 0 -1407px }
+.ico-open { background-position: 0 -1428px }
+.ico-pdf { background-position: 0 -1449px }
+.ico-photo { background-position: 0 -1470px }
+.ico-php { background-position: 0 -1491px }
+.ico-png { background-position: 0 -1512px }
+.ico-pps { background-position: 0 -1533px }
+.ico-ps { background-position: 0 -1554px }
+.ico-psd { background-position: 0 -1575px }
+.ico-pst { background-position: 0 -1596px }
+.ico-ptb { background-position: 0 -1617px }
+.ico-pub { background-position: 0 -1638px }
+.ico-qbb { background-position: 0 -1659px }
+.ico-qbw { background-position: 0 -1680px }
+.ico-qxd { background-position: 0 -1701px }
+.ico-ram { background-position: 0 -1722px }
+.ico-rar { background-position: 0 -1743px }
+.ico-rm { background-position: 0 -1764px }
+.ico-rmvb { background-position: 0 -1785px }
+.ico-rtf { background-position: 0 -1806px }
+.ico-sea { background-position: 0 -1827px }
+.ico-ses { background-position: 0 -1848px }
+.ico-sit { background-position: 0 -1869px }
+.ico-sitx { background-position: 0 -1890px }
+.ico-ss { background-position: 0 -1911px }
+.ico-swf { background-position: 0 -1932px }
+.ico-tgz { background-position: 0 -1953px }
+.ico-thm { background-position: 0 -1974px }
+.ico-tif { background-position: 0 -1995px }
+.ico-tmp { background-position: 0 -2016px }
+.ico-torrent { background-position: 0 -2037px }
+.ico-ttf { background-position: 0 -2058px }
+.ico-txt { background-position: 0 -2079px }
+.ico-vcd { background-position: 0 -2100px }
+.ico-vob { background-position: 0 -2121px }
+.ico-wav { background-position: 0 -2142px }
+.ico-wma { background-position: 0 -2163px }
+.ico-wmv { background-position: 0 -2184px }
+.ico-wps { background-position: 0 -2205px }
+.ico-xls { background-position: 0 -2226px }
+.ico-xpi { background-position: 0 -2247px }
+.ico-zip { background-position: 0 -2268px }

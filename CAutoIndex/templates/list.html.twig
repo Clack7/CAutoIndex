@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th><a href="#" data-name="name">Nombre{% if order == 'name' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
+                <th><a href="#" data-name="ext">Extensión{% if order == 'ext' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
+                <th><a href="#" data-name="size">Tamaño{% if order == 'size' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
+                <th style="width:80px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in dir.files %}
+            <tr>
+                <td{% if file.status %} class="status-{{ file.status }}"{% endif %}><span class="status-ico"></span><span class="ico-{{ file.icon }}"></span> <a href="{{ file.url }}"{% if file.isDir %} data-in="1" class="folder"{% elseif file.isImage %} data-fancybox-title="{{ file.name }}" rel="gallery1" class="showImage"{% else %} target="_blank"{% endif %}>{{ file.name }}</a></td>
+                <td>{{ file.ext }}</td>
+                <td>{{ file.size }}</td>
+                <td class="text-right">
+                    {% if not file.isDir %}
+                        {% if file.isImage %}
+                    <a href="{{ file.url }}"  data-fancybox-title="{{ file.name }}" title="Ver&nbsp;imagen" rel="gallery2" class="showImage"><span class="ico-photo"></span></a>
+                        {% else %}
+                    <a href="{{ file.url }}" data-fancybox-type="iframe" data-fancybox-title="{{ file.name }}" title="Ver&nbsp;en&nbsp;Iframe" class="showIframe"><span class="ico-iframe"></span></a>
+                    <a href="/{{ app.subDir }}_code?path={{ file.relUrl }}" data-fancybox-type="iframe" data-fancybox-title="{{ file.name }}" title="Ver&nbsp;código&nbsp;de&nbsp;fuente" class="showCode"><span class="ico-code"></span></a>
+                        {% endif %}
+                    <a href="{{ file.url }}" title="Ejecutar&nbsp;en&nbsp;navegador" target="_blank" class="open"><span class="ico-open"></span></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="text-center"><em>Directorio vacio</em></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
