@@ -1,7 +1,8 @@
 #Reverse the parent 'ignore all'
 !*
 
-/vendor/
-/logs/*
 /cache/*
+/config/options.php
+/logs/*
+/vendor/
 composer.lock
