@@ -105,6 +105,7 @@ $(function() {
             if (current !== '/') { document.title = current; }
             addrOn = true;
         });
+        headerResize();
     }
     
     $('#list').delegate('th a', 'click', function(e) {
@@ -126,6 +127,10 @@ $(function() {
         
         get(current, false, true);
     });
+
+    function headerResize() {
+        $('#wrap .container .page-header:first').animate({ height: $('h1').outerHeight() + 19 }, 450);
+    }
     
     function initFancyBox() {
         $(".showImage").fancybox({
@@ -168,5 +173,13 @@ $(function() {
             }
             e.preventDefault();
         }
+    });
+
+    var wResTo;
+    $(window).resize(function() {
+        clearTimeout(wResTo);
+        wResTo = setTimeout(function() {
+            headerResize();
+        }, 500);
     });
 });
