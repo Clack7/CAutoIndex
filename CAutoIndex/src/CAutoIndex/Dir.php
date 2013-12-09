@@ -269,6 +269,10 @@ class Dir
     {
         if (!$this->setPath($path) || !is_file($this->_path)) { return false; }
 
+        if ($this->_path == $this->_testPath . DIRECTORY_SEPARATOR . '.htaccess'
+         || $this->_path == $this->_testPath . DIRECTORY_SEPARATOR . '.gitignore'
+         || strpos($this->_path, $this->_testPath . DIRECTORY_SEPARATOR . '.git' . DIRECTORY_SEPARATOR) !== false) { return false; }
+
         $contents = file_get_contents($this->_path);
         
         if (!empty($contents)) {
