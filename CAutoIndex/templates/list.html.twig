@@ -2,15 +2,15 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th><a href="#" data-name="name">Nombre{% if order == 'name' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
-                <th><a href="#" data-name="ext">Extensión{% if order == 'ext' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
-                <th><a href="#" data-name="size">Tamaño{% if order == 'size' %} <span class="glyphicon glyphicon-chevron-{{ asc ? 'down' : 'up' }}"></span>{% endif %}</a></th>
+                <th><a href="#" data-order="n">Nombre</a></th>
+                <th><a href="#" data-order="e">Extensión</a></th>
+                <th><a href="#" data-order="s">Tamaño</a></th>
                 <th style="width:80px;"></th>
             </tr>
         </thead>
         <tbody>
             {% for ele in dir.elements %}
-            <tr>
+            <tr data-sn="{{ ele.getOrder('n') }}" data-se="{{ ele.getOrder('e') }}" data-ss="{{ ele.getOrder('s') }}">
                 <td{% if ele.status %} class="status-{{ ele.status }}"{% endif %}><span class="status-ico"></span><span class="ico-{{ ele.icon }}"></span> <a href="{{ ele.url }}"{% if ele.isDir %} data-in="1" class="folder"{% elseif ele.isImage %} data-fancybox-title="{{ ele.name }}" rel="gallery1" class="showImage"{% else %} target="_blank"{% endif %}>{{ ele.name }}</a></td>
                 <td>{{ ele.isDir ? '' : ele.extension }}</td>
                 <td>{{ ele.isDir ? '' : ele.sizeString }}</td>

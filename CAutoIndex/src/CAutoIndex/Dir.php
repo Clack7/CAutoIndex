@@ -40,12 +40,13 @@ class Dir extends Element
      * @param string  $order
      * @param boolean $asc
      */
-    public function explore($order = 'ext', $asc = true)
+    public function explore()
     {
         $paths = array_merge(glob($this->_path . DIRECTORY_SEPARATOR . '.*'), glob($this->_path . DIRECTORY_SEPARATOR . '*'));
 
         $this->_elements = array();
         $explorablePath = Config::get('explorablePath') . DIRECTORY_SEPARATOR;
+        $order = array('n' => array(), 'e' => array(), 's' => array());
         foreach ($paths as $path) {
             if (in_array(basename($path), array('.', '..'))) { continue; }
             
@@ -56,13 +57,21 @@ class Dir extends Element
                 continue;
             }
 
-            $this->_elements[$element->getOrderKey($order)] = $element;
+            $order['n'][$element->getOrderKey('name')] = $element;
+            $order['e'][$element->getOrderKey('ext')]  = $element;
+            $order['s'][$element->getOrderKey('size')] = $element;
+
+            $this->_elements[] = $element;
         }
-        
-        if ($asc) {
-           ksort($this->_elements); 
-        } else {
-           krsort($this->_elements);
+
+        ksort($order['n']); $order['n'] = array_values($order['n']);
+        ksort($order['e']); $order['e'] = array_values($order['e']);
+        ksort($order['s']); $order['s'] = array_values($order['s']);
+
+        foreach ($this->_elements as $element) {
+            $element->setOrder(array_search($element, $order['n']), 'n');
+            $element->setOrder(array_search($element, $order['e']), 'e');
+            $element->setOrder(array_search($element, $order['s']), 's');
         }
     }
 

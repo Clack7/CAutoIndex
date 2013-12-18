@@ -52,6 +52,12 @@ abstract class Element
      * @var string
      */
     protected $_status;
+
+    /**
+     * Element order
+     * @var array
+     */
+    protected $_order = array();
     
     /**
      * Constructor
@@ -71,7 +77,7 @@ abstract class Element
     {
         $path = utf8_decode($path);
 
-        $name   = utf8_encode(basename($path));
+        $name = utf8_encode(basename($path));
 
         $path = realpath($path);
 
@@ -174,6 +180,26 @@ abstract class Element
         }
         
         return 'file';
+    }
+
+    /**
+     * Set a element order
+     * @param integer $order
+     * @param string  $type
+     */
+    public function setOrder($order, $type)
+    {
+        $this->_order[$type] = $order;
+    }
+
+    /**
+     * Get a element order
+     * @param  string $type
+     * @return integer      
+     */
+    public function getOrder($type)
+    {
+        return isset($this->_order[$type]) ? $this->_order[$type] : 0;
     }
 
     /**

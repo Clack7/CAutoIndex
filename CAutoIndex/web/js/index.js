@@ -4,7 +4,7 @@
  * Copyright (C) 2013 Claudio Andrés Rivero <riveroclaudio@ymail.com>
  */
 $(function() {
-    var ajax, addrOn = false, init = false, fancyImg = false, order = '';
+    var ajax, addrOn = false, init = false, fancyImg = false, orderBy = ['e', 1];
     var baseUrl = location.protocol+'//'+location.hostname;
     $('.container').delegate('.folder', 'click', function(e) {
         e.preventDefault();
@@ -26,7 +26,7 @@ $(function() {
         if (ajax) { ajax.abort(); }
         $('#list .panel-loader').fadeIn(300);
         ajax = $.get(
-            '/' + subDir + '?path=' + url + (order ? '&' + order : ''),
+            '/' + subDir + '?path=' + url,
             function (data) {
                 $('#list .panel-loader').fadeOut(300);
                 if (data.list) {
@@ -60,6 +60,7 @@ $(function() {
                         var list = $(data.list);
                         list.css({ width: w, left: l });
                         $('#list').css('overflow', 'hidden').append(list);
+                        orderRows(list);
 
                         table.animate({ left: (l * -1) }, 500, function() { $(this).remove(); });
                         list.animate({ left: 0 }, 500, function() {
@@ -72,6 +73,7 @@ $(function() {
                     } else {
                         table.remove();
                         $('#list').append(data.list);
+                        orderRows();
                     }
                     
                     $('body,html').animate({scrollTop: 0}, 500);
@@ -111,22 +113,33 @@ $(function() {
     $('#list').delegate('th a', 'click', function(e) {
         e.preventDefault();
 
-        var cls = 'glyphicon glyphicon-chevron-';
-        var span = $(this).find('span');
-        if (span.length < 1) {
-            $('#list th a span').remove();
-            $(this).append(' <span class="' + cls + 'down"></span>');
-            order = 'ord=' + $(this).data('name') + '&asc=1';
-        } else if (span.hasClass(cls + 'down')) {
-            span.removeClass(cls + 'down').addClass(cls + 'up');
-            order = 'ord=' + $(this).data('name') + '&asc=0';
-        } else {
-            span.removeClass(cls + 'up').addClass(cls + 'down');
-            order = 'ord=' + $(this).data('name') + '&asc=1';
-        }
-        
-        get(current, false, true);
+        var order = $(this).data('order');
+        var asc = order == orderBy[0] ? (orderBy[1] == 1 ? 0 : 1) : 1;
+        orderBy = [order, asc];
+
+        orderRows();
     });
+
+    function orderRows(list) {
+        var table = list ? $(list) : $('#list table:last');
+        var rows  = table.find('tbody tr').get();
+        rows.sort(function(a, b) {
+            var keyA = $(a).data('s' + orderBy[0]);
+            var keyB = $(b).data('s' + orderBy[0]);
+            if (keyA < keyB) { return orderBy[1] ? -1 : 1; }
+            if (keyA > keyB) { return orderBy[1] ? 1 : -1; }
+            return 0;
+        });
+
+        $.each(rows, function(index, row) {
+            table.find('tbody').append(row);
+        });
+
+        table.find('th a span').remove();
+        table.find('th a[data-order="' + orderBy[0] + '"]')
+             .append(' <span class="glyphicon glyphicon-chevron-' +
+                     (orderBy[1] == 1 ? 'down' : 'up') + '"></span>');
+    }
 
     function headerResize() {
         $('#wrap .container .page-header:first').animate({ height: $('h1').outerHeight() + 19 }, 450);

@@ -12,12 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) use ($app) {    
     $path  = $request->query->get('path', $path);
-    $order = $request->query->get('ord', 'ext');
-    $asc   = (bool) $request->query->get('asc', true);
 
     try {
         $dir = new Dir($path, true);
-        $dir->explore($order, $asc);
     } catch (\Exception $e) {
         $app->abort(404, 'File not found.');
     }
@@ -25,8 +22,6 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
     if ($request->isXmlHttpRequest()) {
         $list = $app['twig']->render('list.html.twig', array(
             'dir'   => $dir,
-            'order' => $order,
-            'asc'   => $asc,
         ));
 
         $count = count($dir->getElements());
@@ -39,8 +34,6 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
     
     return $app['twig']->render('index.html.twig', array(
         'dir'   => $dir,
-        'order' => $order,
-        'asc'   => $asc,
     ));
 })
 ->assert('path', '^(?!_).*')
