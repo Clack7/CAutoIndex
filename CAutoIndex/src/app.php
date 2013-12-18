@@ -1,10 +1,10 @@
 <?php
 
+use CAutoIndex\Config;
 use Silex\Application;
+use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
-use Silex\Provider\ServiceControllerServiceProvider;
-use CAutoIndex\Dir;
 
 $app = new Application();
 $app->register(new UrlGeneratorServiceProvider());
@@ -14,18 +14,11 @@ $app->register(new TwigServiceProvider(), array(
     'twig.options' => array('cache' => false, /*__DIR__.'/../cache/twig'*/),
 ));
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
-    // add custom globals, filters, tags, ...
+    $twig->addFunction('Config', new \Twig_SimpleFunction('Config', function($param) {
+    	return Config::get($param);
+    }));
 
     return $twig;
 }));
-
-//Index\Dir
-$app['index.dir'] = $app->share(function () use ($app) {
-    $dir = new Dir($app['subDir']);
-    if (isset($app['rootName']) && (string) $app['rootName'] != '') {
-        $dir->setRootName($app['rootName']);
-    }
-    return $dir;
-});
 
 return $app;

@@ -1,19 +1,27 @@
 <?php
 
+use CAutoIndex\Config;
+use CAutoIndex\Dir;
+use CAutoIndex\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$app->get($app['subDir'] . '{path}', function(Request $request, $path) use ($app) {
-    $dir   = $app['index.dir'];
+/**
+ * Index
+ */
+$app->get(Config::get('subDir') . '{path}', function(Request $request, $path) use ($app) {    
     $path  = $request->query->get('path', $path);
     $order = $request->query->get('ord', 'ext');
     $asc   = (bool) $request->query->get('asc', true);
-    
-    if (!$dir->explorePath($path, $order, $asc)) {
+
+    try {
+        $dir = new Dir($path, true);
+        $dir->explore($order, $asc);
+    } catch (\Exception $e) {
         $app->abort(404, 'File not found.');
     }
-    
+
     if ($request->isXmlHttpRequest()) {
         $list = $app['twig']->render('list.html.twig', array(
             'dir'   => $dir,
@@ -21,7 +29,7 @@ $app->get($app['subDir'] . '{path}', function(Request $request, $path) use ($app
             'asc'   => $asc,
         ));
 
-        $count = count($dir->getFiles());
+        $count = count($dir->getElements());
         return new JsonResponse(array(
             'list'  => $list,
             'parts' => $dir->getParts(),
@@ -38,23 +46,25 @@ $app->get($app['subDir'] . '{path}', function(Request $request, $path) use ($app
 ->assert('path', '^(?!_).*')
 ;
 
-$app->get($app['subDir'] . '_code{path}', function(Request $request, $path) use ($app) {
-    $path   = $request->query->get('path', $path);
-    $dir    = $app['index.dir'];
-    $source = $dir->getSource($path);
-    
-    if ($source === false) {
+/**
+ * Source code view
+ */
+$app->get(Config::get('subDir') . '_code/' . Config::get('subDir') . '{path}', function(Request $request, $path) use ($app) {
+    try {
+        $file   = new File($path, true);
+        $source = $file->getSource();
+    } catch (\Exception $e) {
         $app->abort(404, 'File not found.');
     }
     
-    $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $ext = $file->getExtension();
     $ext = $ext == 'htm' ? 'html' : ($ext == 'json' ? 'js' : $ext);
     if (!in_array($ext, array('php', 'html', 'css', 'js', 'sql', 'xml'))) {
         $ext = 'text';
     }
     
     return $app['twig']->render('code.html.twig', array(
-        'dir'    => $dir,
+        //'file'    => $file,
         'path'   => $path,
         'source' => $source,
         'ext'    => $ext,
@@ -63,6 +73,9 @@ $app->get($app['subDir'] . '_code{path}', function(Request $request, $path) use 
 ->assert('path', '.*')
 ;
 
+/**
+ * Error handler
+ */
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
@@ -70,8 +83,5 @@ $app->error(function (\Exception $e, $code) use ($app) {
 
     $page = 404 == $code ? '404.html.twig' : '500.html.twig';
 
-    return new Response($app['twig']->render($page, array(
-        'code' => $code,
-        'dir'  => $app['index.dir'],
-    )), $code);
+    return new Response($app['twig']->render($page), $code);
 });

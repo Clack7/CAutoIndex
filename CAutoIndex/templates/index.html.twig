@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1><a href="/{{ app.subDir }}" class="folder" data-in="0">{{ dir.rootName }}</a>
+    <h1><a href="/{{ Config('subDir') }}" class="folder" data-in="0">{{ Config('rootName') }}</a>
     {% for part in dir.parts %}
     {% set url = (url is defined ? url : '') ~ '/' ~ part  %} 
     / {% if loop.last %}{{ part }}{% else %}<a href="{{ url }}" class="folder" data-in="0">{{ part }}</a>{% endif %}
@@ -13,9 +13,9 @@
     <div class="col-sm-12">
         <div class="panel panel-default" id="list">
             <div class="panel-heading">
-                <span class="pull-right">{{ dir.files|length }} elemento{{ dir.files | length == 1 ? '' : 's' }}</span>
+                <span class="pull-right">{{ dir.elements|length }} elemento{{ dir.elements | length == 1 ? '' : 's' }}</span>
                 <div class="panel-loader"></div>
-                <h3 class="panel-title">{{ dir.rootName }}</h3>
+                <h3 class="panel-title">{{ Config('rootName') }}</h3>
             </div>
             {% include 'list.html.twig' %}
         </div>
@@ -27,8 +27,8 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-var current = '{{ dir.urlPath }}', rootDir = '{{ dir.rootName }}', subDir = '{{ app.subDir }}';
+var current = '{{ dir.url }}', rootDir = '{{ Config('rootName') }}', subDir = '{{ Config('subDir') }}';
 $.fx.off = {{ app.disableAnimations ? 'true' : 'false' }};
 </script>
-<script src="/{{ app.subDir }}{{ dir.sysDir }}/js/index.js" type="text/javascript"></script>
+<script src="{{ Config('sysUrl') }}js/index.js" type="text/javascript"></script>
 {% endblock %}

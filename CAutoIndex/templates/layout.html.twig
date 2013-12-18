@@ -3,15 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ dir.rootName }}</title>
-        <link rel="icon" type="image/x-icon"  href="/{{ app.subDir }}{{ dir.sysDir }}/favicon.ico">
-        <link href="/{{ app.subDir }}{{ dir.sysDir }}/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/{{ app.subDir }}{{ dir.sysDir }}/css/styles.css" rel="stylesheet">
-        <link href="/{{ app.subDir }}{{ dir.sysDir }}/js/fancybox/jquery.fancybox.css" rel="stylesheet">
-        <link href="/{{ app.subDir }}{{ dir.sysDir }}/js/pnotify/jquery.pnotify.default.css" rel="stylesheet">
+        <title>{{ Config('rootName') }}</title>
+        <link rel="icon" type="image/x-icon"  href="{{ Config('sysUrl') }}favicon.ico">
+        <link href="{{ Config('sysUrl') }}css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ Config('sysUrl') }}css/styles.css" rel="stylesheet">
+        <link href="{{ Config('sysUrl') }}js/fancybox/jquery.fancybox.css" rel="stylesheet">
+        <link href="{{ Config('sysUrl') }}js/pnotify/jquery.pnotify.default.css" rel="stylesheet">
         <!--[if lt IE 9]>
-          <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/html5shiv.js"></script>
-          <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/respond.min.js"></script>
+          <script src="{{ Config('sysUrl') }}js/html5shiv.js"></script>
+          <script src="{{ Config('sysUrl') }}js/respond.min.js"></script>
         <![endif]-->
     </head>
 
@@ -26,15 +26,15 @@
             <div class="container">
                 <hr />
                 <p class="text-muted pull-right">Desarrollado por <a href="http://clau.me" target="_blank">Clau.me</a></p>
-                <p class="text-muted">CAutoIndex v1.0.0</p>
+                <p class="text-muted">CAutoIndex v1.0.1</p>
             </div>
         </div>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/jquery.js"></script>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/bootstrap.min.js"></script>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/jquery.mousewheel.js" type="text/javascript"></script>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/pnotify/jquery.pnotify.js" type="text/javascript"></script>
-        <script src="/{{ app.subDir }}{{ dir.sysDir }}/js/address/jquery.address.js" type="text/javascript"></script>
+        <script src="{{ Config('sysUrl') }}js/jquery.js"></script>
+        <script src="{{ Config('sysUrl') }}js/bootstrap.min.js"></script>
+        <script src="{{ Config('sysUrl') }}js/jquery.mousewheel.js" type="text/javascript"></script>
+        <script src="{{ Config('sysUrl') }}js/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+        <script src="{{ Config('sysUrl') }}js/pnotify/jquery.pnotify.js" type="text/javascript"></script>
+        <script src="{{ Config('sysUrl') }}js/address/jquery.address.js" type="text/javascript"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
