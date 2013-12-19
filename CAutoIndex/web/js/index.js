@@ -107,6 +107,7 @@ $(function() {
             if (current !== '/') { document.title = current; }
             addrOn = true;
         });
+        orderRows();
         headerResize();
     }
     
