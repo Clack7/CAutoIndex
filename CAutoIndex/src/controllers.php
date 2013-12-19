@@ -36,34 +36,43 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
         'dir'   => $dir,
     ));
 })
-->assert('path', '^(?!_).*')
+->assert('path', '^(?!_cai).*')
 ;
 
 /**
  * Source code view
  */
-$app->get(Config::get('subDir') . '_code/' . Config::get('subDir') . '{path}', function(Request $request, $path) use ($app) {
-    try {
-        $file   = new File($path, true);
-        $source = $file->getSource();
-    } catch (\Exception $e) {
-        $app->abort(404, 'File not found.');
+$app->get(Config::get('subDir') . '_cai/{action}', function(Request $request, $action) use ($app) {
+    switch ($action) {
+        case 'code': //Source code view
+            $path = $request->query->get('path', null);
+            $path = substr($path, strlen(Config::get('subDir')));
+
+            try {
+                $file   = new File($path, true);
+                $source = $file->getSource();
+            } catch (\Exception $e) {
+                $app->abort(404, 'File not found.');
+            }
+            
+            $ext = $file->getExtension();
+            $ext = $ext == 'htm' ? 'html' : ($ext == 'json' ? 'js' : $ext);
+            if (!in_array($ext, array('php', 'html', 'css', 'js', 'sql', 'xml'))) {
+                $ext = 'text';
+            }
+            
+            return $app['twig']->render('code.html.twig', array(
+                'source' => $source,
+                'ext'    => $ext,
+            ));
+            break;
+        
+        default:
+            $app->abort(404, 'Invalid action.');
+            break;
     }
-    
-    $ext = $file->getExtension();
-    $ext = $ext == 'htm' ? 'html' : ($ext == 'json' ? 'js' : $ext);
-    if (!in_array($ext, array('php', 'html', 'css', 'js', 'sql', 'xml'))) {
-        $ext = 'text';
-    }
-    
-    return $app['twig']->render('code.html.twig', array(
-        //'file'    => $file,
-        'path'   => $path,
-        'source' => $source,
-        'ext'    => $ext,
-    ));
 })
-->assert('path', '.*')
+->assert('action', '\w+')
 ;
 
 /**
