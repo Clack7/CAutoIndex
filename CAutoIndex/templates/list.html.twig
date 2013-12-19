@@ -11,11 +11,19 @@
         <tbody>
             {% for ele in dir.elements %}
             <tr data-sn="{{ ele.getOrder('n') }}" data-se="{{ ele.getOrder('e') }}" data-ss="{{ ele.getOrder('s') }}">
-                <td{% if ele.status %} class="status-{{ ele.status }}"{% endif %}><span class="status-ico"></span><span class="ico-{{ ele.icon }}"></span> <a href="{{ ele.url }}"{% if ele.isDir %} data-in="1" class="folder"{% elseif ele.isImage %} data-fancybox-title="{{ ele.name }}" rel="gallery1" class="showImage"{% else %} target="_blank"{% endif %}>{{ ele.name }}</a></td>
+                <td{% if ele.status %} class="status-{{ ele.status }}"{% endif %}>
+                    {% if ele.status %}<span class="status-ico"></span>{% endif %}
+                    <span class="ico-{{ ele.icon }}"></span> 
+                    {% if ele.status != 'error' %}
+                    <a href="{{ ele.url }}"{% if ele.isDir %} data-in="1" class="folder"{% elseif ele.isImage %} data-fancybox-title="{{ ele.name }}" rel="gallery1" class="showImage"{% else %} target="_blank"{% endif %}>{{ ele.name }}</a>
+                    {% else %}
+                    <span class="text-danger" title="Enlace simbolico invalido.">{{ ele.name }}</span>
+                    {% endif %}
+                </td>
                 <td>{{ ele.isDir ? '' : ele.extension }}</td>
-                <td>{{ ele.isDir ? '' : ele.sizeString }}</td>
+                <td>{{ ele.isDir or ele.status == 'error' ? '' : ele.sizeString }}</td>
                 <td class="text-right">
-                    {% if not ele.isDir %}
+                    {% if not ele.isDir and ele.status != 'error' %}
                         {% if ele.isImage %}
                     <a href="{{ ele.url }}"  data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;imagen" rel="gallery2" class="showImage"><span class="ico-photo"></span></a>
                         {% else %}

@@ -76,12 +76,16 @@ abstract class Element
     protected function _setPath($path)
     {
         $path = utf8_decode($path);
-
-        $name = utf8_encode(basename($path));
-
-        $path = realpath($path);
-
         $ep = Config::get('explorablePath'); $ds = DIRECTORY_SEPARATOR;
+
+        $name   = utf8_encode(basename($path));
+        $isLink = is_link($path) || realpath($path) != $this->_convertAbsolutePath($path);
+
+        if ($isLink && !realpath($path)) {
+            $path = $this->_convertAbsolutePath($path);
+        } else {
+            $path = realpath($path);
+        }
 
         $ignoreElements = array_merge(array(
             $ep . $ds . Config::get('sysDirName'),
@@ -104,6 +108,7 @@ abstract class Element
         }
 
         $this->_path   = $path;
+        $this->_isLink = $isLink;
         $this->_name   = $name;
     }
     
@@ -244,8 +249,24 @@ abstract class Element
      * Tells whether the element is a link to another element
      * @return boolean
      */
-    private function isLink()
+    public function isLink()
     {
         return $this->_isLink;
+    }
+
+    /**
+     * Convert $path to a absolute path
+     * @param  string $path 
+     * @return string
+     */
+    protected function _convertAbsolutePath($path)
+    {
+        $ds = DIRECTORY_SEPARATOR;
+
+        $parent = explode('/', trim(str_replace($ds, '/', $path), '/'));
+        array_pop($parent); 
+        $parent = realpath(implode($ds, $parent));
+
+        return $parent ? $parent . $ds . basename($path) : false;
     }
 }
