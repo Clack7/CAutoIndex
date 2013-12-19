@@ -9,3 +9,11 @@ $app['rootName'] = null; //'Tests';
  * Disable animations
  */
 $app['disableAnimations'] = false;
+
+/**
+ * Ignore files and directories (relative or absolute paths)
+ */
+$app['ignoreElements'] = array(
+	__DIR__ . '/../../.git',        //CAutoindex .git directory
+	__DIR__ . '/../../.gitignore',  //CAutoindex .gitignore
+);

@@ -82,14 +82,24 @@ abstract class Element
         $path = realpath($path);
 
         $ep = Config::get('explorablePath'); $ds = DIRECTORY_SEPARATOR;
+
+        $ignoreElements = array_merge(array(
+            $ep . $ds . Config::get('sysDirName'),
+            $ep . $ds . '.htaccess',
+        ), Config::get('ignoreElements'));
+
+        $ignored = false;
+        foreach ($ignoreElements as $ign) {
+            $ign = realpath($ign);
+            if ((is_dir($ign) && strpos($path . $ds, $ign . $ds) !== false) || 
+                $path == $ign) {
+                $ignored = true;
+                break;
+            }
+        }
         
-        if (!$path || strpos($path, $ep) !== 0 || 
-            strpos($path . $ds, $ep . $ds . Config::get('sysDirName') . $ds) !== false ||
-            strpos($path . $ds, $ep . $ds . '.git' . $ds) !== false ||
-            in_array($path, array(
-                $ep . $ds . '.htaccess', 
-                $ep . $ds . '.gitignore', 
-            )) || ($this->isDir() && !is_dir($path))) {
+        if (!$path || strpos($path, $ep) !== 0 || $ignored || 
+            ($this->isDir() && !is_dir($path))) {
             throw new \Exception('Invalid path.');
         }
 

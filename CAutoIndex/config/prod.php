@@ -24,6 +24,7 @@ if (!$app['rootName']) {
 }
 Config::set('rootName', $app['rootName']);
 Config::set('sysUrl', '/' . Config::get('subDir') . Config::get('sysDirName') . '/');
+Config::set('ignoreElements', $app['ignoreElements']);
 
 
 /*$app->register(new MonologServiceProvider(), array(
