@@ -4,23 +4,16 @@
  * Copyright (C) 2013 Claudio Andrés Rivero <riveroclaudio@ymail.com>
  */
 $(function() {
-    var ajax, addrOn = false, init = false, fancyImg = false, orderBy = ['e', 1];
-    var baseUrl = location.protocol+'//'+location.hostname;
+    var ajax, init = false, fancyImg = false, orderBy = ['e', 1];
+    var baseUrl = location.protocol + '//' + location.hostname;
     $('.container').delegate('.folder', 'click', function(e) {
         e.preventDefault();
-        get($(this).attr('href'), $(this).data('in'));
-    });
-
-    $.address.change(function(e) {
-        if (addrOn) {
-            var inFx = e.path.length > current.length ? 1 : 0;
-            get(e.path, inFx);
-        }
+        var url = $(this).attr('href').replace(baseUrl, '').substring(subDir.length);
+        get(url, $(this).data('in'));
     });
     
-    function get(url, inFx, force) {
-        if (subDir) { url = url.replace(subDir, ''); }
-        url = url.replace(baseUrl, '');
+    function get(url, inFx, force, newState) {
+        if (url.substr(url.length - 1) != '/') { url += '/'; }
         if (init && current === url && !force) { return; }
       
         if (ajax) { ajax.abort(); }
@@ -33,7 +26,8 @@ $(function() {
                     current = url.split("&")[0];
                     init = true;
                     
-                    var links = '<a href="/' + subDir + '" class="folder" data-in="0">' + rootDir + '</a>', route = '';
+                    var links = '<a href="/' + subDir + '" class="folder" data-in="0">' + rootDir + '</a>', 
+                        route = subDir ? '/' + subDir.substring(0, subDir.length - 1) : '';
                     var last = data.parts.pop();
                     for (var i in data.parts) {
                         route += '/' + data.parts[i];
@@ -77,12 +71,14 @@ $(function() {
                     }
                     
                     $('body,html').animate({scrollTop: 0}, 500);
-                    
-                    addrOn = false;
-                    window.location.hash = url;
-                    addrOn = true;
-                    
-                    document.title = current === '/' ? rootDir : current;
+
+                    if (newState !== false) {
+                        History.pushState(
+                            {urlPath: current}, 
+                            getTitle(), 
+                            '/' + subDir.substring(0, subDir.length - 1) + current
+                        );
+                    }
                 }
             }
         );
@@ -99,17 +95,40 @@ $(function() {
         $('#list .panel-loader').fadeOut(300);
     });
     
-    if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#' + current) {
-        get(window.location.hash.substring(1), 1);
+    if (window.location.hash && window.location.hash !== '#' && window.location.hash.substring(0, 4) !== '#./?') {
+        var url = window.location.hash.substring(1);
+        url = decodeURIComponent(decodeURIComponent(url.split('?')[0].replace('./', '')));
+        if (url.substring(0, 1) != '/') { url = current + '/' + url; }
+        if (url != '/' && url.substring(url.length - 1) == '/') { url = url.substring(0, url.length - 1); }
+        if (url != '' && url != current) {
+            History.replaceState(
+                {urlPath: url}, getTitle(url), 
+                '/' + subDir.substring(0, subDir.length - 1) + url
+            );
+            get(url, 1, false, false);
+        }
     } else {
         $('#list').css('overflow', 'hidden').animate({ height: ($('#list table:first').outerHeight() + 41) }, 500, function() {
             $(this).css('overflow', 'visible');
-            if (current !== '/') { document.title = current; }
-            addrOn = true;
+            if (current !== '/') { 
+                document.title = getTitle(); 
+                $('#list .panel-heading .panel-title').text(current.split('/').pop()); 
+            }
         });
         orderRows();
         headerResize();
+
+        History.replaceState(
+            {urlPath: current},
+            current !== '/' ? getTitle() : document.title, window.location.pathname
+        );
     }
+
+    History.Adapter.bind(window, 'statechange', function() {
+        var State = History.getState();
+        var inFx = State.data.urlPath.length > current.length ? 1 : 0;
+        get(State.data.urlPath, inFx, false, false);
+    });
     
     $('#list').delegate('th a', 'click', function(e) {
         e.preventDefault();
@@ -120,6 +139,21 @@ $(function() {
 
         orderRows();
     });
+
+    function getTitle(path) {
+        path = path ? path : current;
+
+        if (path == '/') {
+            return rootDir;
+        }
+
+        path  = path.substring(path.length - 1) == '/' ? path.substring(0, path.length - 1) : path;
+        path  = path.split('/');
+        title = path.pop();
+        path  = path.join('/');
+
+        return title + (path == '' ? '' : ' - ' + path);
+    }
 
     function orderRows(list) {
         var table = list ? $(list) : $('#list table:last');
