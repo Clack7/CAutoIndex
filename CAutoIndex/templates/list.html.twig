@@ -15,7 +15,7 @@
                     {% if ele.status %}<span class="status-ico"></span>{% endif %}
                     <span class="ico-{{ ele.icon }}"></span> 
                     {% if ele.status != 'error' %}
-                    <a href="{{ ele.url }}"{% if ele.isDir %} data-in="1" class="folder"{% elseif ele.isImage %} data-fancybox-title="{{ ele.name }}" rel="gallery1" class="showImage"{% else %} target="_blank"{% endif %}>{{ ele.name }}</a>
+                    <a href="{{ ele.url }}"{% if ele.isDir %} data-in="1" class="folder"{% elseif ele.isImage %} data-fancybox-title="{{ ele.name }}" rel="gallery1" class="showImage"{% endif %}>{{ ele.name }}</a>
                     {% else %}
                     <span class="text-danger" title="Enlace simbolico invalido.">{{ ele.name }}</span>
                     {% endif %}
@@ -25,12 +25,12 @@
                 <td class="text-right">
                     {% if not ele.isDir and ele.status != 'error' %}
                         {% if ele.isImage %}
-                    <a href="{{ ele.url }}"  data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;imagen" rel="gallery2" class="showImage"><span class="ico-photo"></span></a>
+                    <a href="{{ ele.url }}"  data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;imagen" rel="gallery2" class="showImage"><span class="action-photo"></span></a>
                         {% else %}
-                    <a href="{{ ele.url }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;en&nbsp;Iframe" class="showIframe"><span class="ico-iframe"></span></a>
-                    <a href="/{{ Config('subDir') }}_cai/code?path={{ ele.getUrl(false) }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;código&nbsp;de&nbsp;fuente" class="showCode"><span class="ico-code"></span></a>
+                    <a href="{{ ele.url }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;en&nbsp;Iframe" class="showIframe"><span class="action-iframe"></span></a>
+                    <a href="/{{ Config('subDir') }}_cai/code?path={{ ele.getUrl(false) }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;código&nbsp;de&nbsp;fuente" class="showCode"><span class="action-code"></span></a>
                         {% endif %}
-                    <a href="{{ ele.url }}" title="Ejecutar&nbsp;en&nbsp;navegador" target="_blank" class="open"><span class="ico-open"></span></a>
+                    <a href="{{ ele.url }}" title="Ejecutar&nbsp;en&nbsp;navegador" class="open"><span class="action-go"></span></a>
                     {% endif %}
                 </td>
             </tr>

@@ -190,8 +190,23 @@ abstract class Element
         if ($this->isDir()) {
             return 'dir';
         }
+
+        $icons = array(
+            '3gp', '7z', 'ace', 'ai', 'aif', 'aiff', 'amr', 'asf', 'asx', 'bat', 
+            'bin', 'bmp', 'bup', 'cab', 'cbr', 'cda', 'cdl', 'cdr', 'chm', 
+            'css', 'dat', 'dir', 'divx', 'dll', 'dmg', 'doc', 'dss', 'dvf', 
+            'dwg', 'eml', 'eps', 'exe', 'file', 'fla', 'flv', 'gif', 'gz', 
+            'hqx', 'htaccess', 'htm', 'html', 'ifo', 'indd', 'iso', 'jar', 
+            'jpeg', 'jpg', 'js', 'json', 'lnk', 'log', 'm4a', 'm4b', 'm4p', 
+            'm4v', 'mcd', 'mdb', 'mid', 'mov', 'mp2', 'mp4', 'mpeg', 'mpg', 
+            'msi', 'mswmm', 'ogg', 'pdf', 'php', 'png', 'pps', 'ps', 'psd', 
+            'pst', 'ptb', 'pub', 'qbb', 'qbw', 'qxd', 'ram', 'rar', 'rm', 
+            'rmvb', 'rtf', 'sea', 'ses', 'sit', 'sitx', 'ss', 'swf', 'tgz', 
+            'thm', 'tif', 'tmp', 'torrent', 'ttf', 'txt', 'vcd', 'vob', 'wav', 
+            'wma', 'wmv', 'wps', 'xls', 'xpi', 'zip'
+        );
         
-        if (file_exists(Config::get('explorablePath') . '/' . Config::get('sysDirName') . '/web/img/icons/ico-' . $this->getExtension() . '.png')) {
+        if (in_array($this->getExtension(), $icons)) {
             return $this->getExtension();
         }
         

@@ -79,10 +79,12 @@ iframe, #source {
     display:block;
     position:absolute;
     margin:5px 0 0 1px;
-    background: url(./../img/status-symlink.png) no-repeat;
+    background: url(./../img/sprite.png) no-repeat;
+    background-position: 0 -2310px;
 }
 .status-error .status-ico {
-    background-image: url(./../img/status-error.png);
+    background-image: url(./../img/sprite.png);
+    background-position: 0 -2289px;
 }
 .status-error a {
     color: #B94A48;
@@ -101,92 +103,92 @@ iframe, #source {
 }
 
 /* Sprite icons */
-.ico-3gp, .ico-7z, .ico-ace, .ico-ai, .ico-aif, .ico-aiff, .ico-amr, .ico-asf, 
-.ico-asx, .ico-bat, .ico-bin, .ico-bmp, .ico-bup, .ico-cab, .ico-cbr, .ico-cda, 
-.ico-cdl, .ico-cdr, .ico-chm, .ico-code, .ico-css, .ico-dat, .ico-dir, 
-.ico-divx, .ico-dll, .ico-dmg, .ico-doc, .ico-dss, .ico-dvf, .ico-dwg, .ico-eml, 
-.ico-eps, .ico-exe, .ico-file, .ico-fla, .ico-flv, .ico-gif, .ico-gz, .ico-hqx, 
-.ico-htaccess, .ico-htm, .ico-html, .ico-ifo, .ico-iframe, .ico-indd, .ico-iso, 
-.ico-jar, .ico-jpeg, .ico-jpg, .ico-js, .ico-json, .ico-lnk, .ico-log, .ico-m4a, 
-.ico-m4b, .ico-m4p, .ico-m4v, .ico-mcd, .ico-mdb, .ico-mid, .ico-mov, .ico-mp2, 
-.ico-mp4, .ico-mpeg, .ico-mpg, .ico-msi, .ico-mswmm, .ico-ogg, .ico-open, 
-.ico-pdf, .ico-photo, .ico-php, .ico-png, .ico-pps, .ico-ps, .ico-psd, .ico-pst, 
+.action-code, .action-go, .action-iframe, .action-photo, .ico-3gp, .ico-7z, .ico-ace, .ico-ai, 
+.ico-aif, .ico-aiff, .ico-amr, .ico-asf, .ico-asx, .ico-bat, .ico-bin, .ico-bmp, 
+.ico-bup, .ico-cab, .ico-cbr, .ico-cda, .ico-cdl, .ico-cdr, .ico-chm, .ico-css, 
+.ico-dat, .ico-dir, .ico-divx, .ico-dll, .ico-dmg, .ico-doc, .ico-dss, .ico-dvf, 
+.ico-dwg, .ico-eml, .ico-eps, .ico-exe, .ico-file, .ico-fla, .ico-flv, .ico-gif, 
+.ico-gz, .ico-hqx, .ico-htaccess, .ico-htm, .ico-html, .ico-ifo, .ico-indd, 
+.ico-iso, .ico-jar, .ico-jpeg, .ico-jpg, .ico-js, .ico-json, .ico-lnk, .ico-log, 
+.ico-m4a, .ico-m4b, .ico-m4p, .ico-m4v, .ico-mcd, .ico-mdb, .ico-mid, .ico-mov, 
+.ico-mp2, .ico-mp4, .ico-mpeg, .ico-mpg, .ico-msi, .ico-mswmm, .ico-ogg, 
+.ico-pdf,  .ico-php, .ico-png, .ico-pps, .ico-ps, .ico-psd, .ico-pst, 
 .ico-ptb, .ico-pub, .ico-qbb, .ico-qbw, .ico-qxd, .ico-ram, .ico-rar, .ico-rm, 
 .ico-rmvb, .ico-rtf, .ico-sea, .ico-ses, .ico-sit, .ico-sitx, .ico-ss, .ico-swf, 
 .ico-tgz, .ico-thm, .ico-tif, .ico-tmp, .ico-torrent, .ico-ttf, .ico-txt, 
 .ico-vcd, .ico-vob, .ico-wav, .ico-wma, .ico-wmv, .ico-wps, .ico-xls, .ico-xpi, 
 .ico-zip { display:inline-block; background: url(./../img/sprite.png) no-repeat 0 0; width:16px; height:16px; vertical-align:middle; }
-.ico-3gp { background-position: 0 0px }
-.ico-7z { background-position: 0 -21px }
-.ico-ace { background-position: 0 -42px }
-.ico-ai { background-position: 0 -63px }
-.ico-aif { background-position: 0 -84px }
-.ico-aiff { background-position: 0 -105px }
-.ico-amr { background-position: 0 -126px }
-.ico-asf { background-position: 0 -147px }
-.ico-asx { background-position: 0 -168px }
-.ico-bat { background-position: 0 -189px }
-.ico-bin { background-position: 0 -210px }
-.ico-bmp { background-position: 0 -231px }
-.ico-bup { background-position: 0 -252px }
-.ico-cab { background-position: 0 -273px }
-.ico-cbr { background-position: 0 -294px }
-.ico-cda { background-position: 0 -315px }
-.ico-cdl { background-position: 0 -336px }
-.ico-cdr { background-position: 0 -357px }
-.ico-chm { background-position: 0 -378px }
-.ico-code { background-position: 0 -399px }
-.ico-css { background-position: 0 -420px }
-.ico-dat { background-position: 0 -441px }
-.ico-dir { background-position: 0 -462px }
-.ico-divx { background-position: 0 -483px }
-.ico-dll { background-position: 0 -504px }
-.ico-dmg { background-position: 0 -525px }
-.ico-doc { background-position: 0 -546px }
-.ico-dss { background-position: 0 -567px }
-.ico-dvf { background-position: 0 -588px }
-.ico-dwg { background-position: 0 -609px }
-.ico-eml { background-position: 0 -630px }
-.ico-eps { background-position: 0 -651px }
-.ico-exe { background-position: 0 -672px }
-.ico-file { background-position: 0 -693px }
-.ico-fla { background-position: 0 -714px }
-.ico-flv { background-position: 0 -735px }
-.ico-gif { background-position: 0 -756px }
-.ico-gz { background-position: 0 -777px }
-.ico-hqx { background-position: 0 -798px }
-.ico-htaccess { background-position: 0 -819px }
-.ico-htm { background-position: 0 -840px }
-.ico-html { background-position: 0 -861px }
-.ico-ifo { background-position: 0 -882px }
-.ico-iframe { background-position: 0 -903px }
-.ico-indd { background-position: 0 -924px }
-.ico-iso { background-position: 0 -945px }
-.ico-jar { background-position: 0 -966px }
-.ico-jpeg { background-position: 0 -987px }
-.ico-jpg { background-position: 0 -1008px }
-.ico-js { background-position: 0 -1029px }
-.ico-json { background-position: 0 -1050px }
-.ico-lnk { background-position: 0 -1071px }
-.ico-log { background-position: 0 -1092px }
-.ico-m4a { background-position: 0 -1113px }
-.ico-m4b { background-position: 0 -1134px }
-.ico-m4p { background-position: 0 -1155px }
-.ico-m4v { background-position: 0 -1176px }
-.ico-mcd { background-position: 0 -1197px }
-.ico-mdb { background-position: 0 -1218px }
-.ico-mid { background-position: 0 -1239px }
-.ico-mov { background-position: 0 -1260px }
-.ico-mp2 { background-position: 0 -1281px }
-.ico-mp4 { background-position: 0 -1302px }
-.ico-mpeg { background-position: 0 -1323px }
-.ico-mpg { background-position: 0 -1344px }
-.ico-msi { background-position: 0 -1365px }
-.ico-mswmm { background-position: 0 -1386px }
-.ico-ogg { background-position: 0 -1407px }
-.ico-open { background-position: 0 -1428px }
+.action-code { background-position: 0 -0px }
+.action-go { background-position: 0 -21px }
+.action-iframe { background-position: 0 -42px }
+.action-photo { background-position: 0 -1470px }
+.ico-3gp { background-position: 0 -63px }
+.ico-7z { background-position: 0 -84px }
+.ico-ace { background-position: 0 -105px }
+.ico-ai { background-position: 0 -126px }
+.ico-aif { background-position: 0 -147px }
+.ico-aiff { background-position: 0 -168px }
+.ico-amr { background-position: 0 -189px }
+.ico-asf { background-position: 0 -210px }
+.ico-asx { background-position: 0 -231px }
+.ico-bat { background-position: 0 -252px }
+.ico-bin { background-position: 0 -273px }
+.ico-bmp { background-position: 0 -294px }
+.ico-bup { background-position: 0 -315px }
+.ico-cab { background-position: 0 -336px }
+.ico-cbr { background-position: 0 -357px }
+.ico-cda { background-position: 0 -378px }
+.ico-cdl { background-position: 0 -399px }
+.ico-cdr { background-position: 0 -420px }
+.ico-chm { background-position: 0 -441px }
+.ico-css { background-position: 0 -462px }
+.ico-dat { background-position: 0 -483px }
+.ico-dir { background-position: 0 -504px }
+.ico-divx { background-position: 0 -525px }
+.ico-dll { background-position: 0 -546px }
+.ico-dmg { background-position: 0 -567px }
+.ico-doc { background-position: 0 -588px }
+.ico-dss { background-position: 0 -609px }
+.ico-dvf { background-position: 0 -630px }
+.ico-dwg { background-position: 0 -651px }
+.ico-eml { background-position: 0 -672px }
+.ico-eps { background-position: 0 -693px }
+.ico-exe { background-position: 0 -714px }
+.ico-file { background-position: 0 -735px }
+.ico-fla { background-position: 0 -756px }
+.ico-flv { background-position: 0 -777px }
+.ico-gif { background-position: 0 -798px }
+.ico-gz { background-position: 0 -819px }
+.ico-hqx { background-position: 0 -840px }
+.ico-htaccess { background-position: 0 -861px }
+.ico-htm { background-position: 0 -882px }
+.ico-html { background-position: 0 -903px }
+.ico-ifo { background-position: 0 -924px }
+.ico-indd { background-position: 0 -945px }
+.ico-iso { background-position: 0 -966px }
+.ico-jar { background-position: 0 -987px }
+.ico-jpeg { background-position: 0 -1008px }
+.ico-jpg { background-position: 0 -1029px }
+.ico-js { background-position: 0 -1050px }
+.ico-json { background-position: 0 -1071px }
+.ico-lnk { background-position: 0 -1092px }
+.ico-log { background-position: 0 -1113px }
+.ico-m4a { background-position: 0 -1134px }
+.ico-m4b { background-position: 0 -1155px }
+.ico-m4p { background-position: 0 -1176px }
+.ico-m4v { background-position: 0 -1197px }
+.ico-mcd { background-position: 0 -1218px }
+.ico-mdb { background-position: 0 -1239px }
+.ico-mid { background-position: 0 -1260px }
+.ico-mov { background-position: 0 -1281px }
+.ico-mp2 { background-position: 0 -1302px }
+.ico-mp4 { background-position: 0 -1323px }
+.ico-mpeg { background-position: 0 -1344px }
+.ico-mpg { background-position: 0 -1365px }
+.ico-msi { background-position: 0 -1386px }
+.ico-mswmm { background-position: 0 -1407px }
+.ico-ogg { background-position: 0 -1428px }
 .ico-pdf { background-position: 0 -1449px }
-.ico-photo { background-position: 0 -1470px }
 .ico-php { background-position: 0 -1491px }
 .ico-png { background-position: 0 -1512px }
 .ico-pps { background-position: 0 -1533px }
