@@ -14,6 +14,7 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
     $path  = $request->query->get('path', $path);
 
     try {
+        $path = mb_convert_encoding($path, Config::get('fileSystemEncoding'), 'UTF-8');
         $dir = new Dir($path, true);
     } catch (\Exception $e) {
         $app->abort(404, 'File not found.');
@@ -28,6 +29,7 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
         return new JsonResponse(array(
             'list'  => $list,
             'parts' => $dir->getParts(),
+            'current' => array($dir->getUrl(false), $dir->getUrl(false, false)),
             'info'  => $count . ' elemento' . ($count == 1 ? '' : 's'),
         ));
     }
@@ -46,9 +48,9 @@ $app->get(Config::get('subDir') . '_cai/{action}', function(Request $request, $a
     switch ($action) {
         case 'code': //Source code view
             $path = $request->query->get('path', null);
-            $path = substr($path, strlen(Config::get('subDir')));
 
             try {
+                $path = mb_convert_encoding($path, Config::get('fileSystemEncoding'), 'UTF-8');
                 $file   = new File($path, true);
                 $source = $file->getSource();
             } catch (\Exception $e) {

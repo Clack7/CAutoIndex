@@ -17,3 +17,8 @@ $app['ignoreElements'] = array(
 	__DIR__ . '/../../.git',        //CAutoindex .git directory
 	__DIR__ . '/../../.gitignore',  //CAutoindex .gitignore
 );
+
+/**
+ * Filesystem encoding
+ */
+$app['fileSystemEncoding'] = 'UTF-8'; //UTF-8, Windows-1252, etc..

@@ -4,7 +4,7 @@
  * Copyright (C) 2013 Claudio Andrés Rivero <riveroclaudio@ymail.com>
  */
 $(function() {
-    var ajax, init = false, fancyImg = false, orderBy = ['e', 1];
+    var ajax, init = false, fancyImg = false, orderBy = ['e', 1], stateChange = true;
     var baseUrl = location.protocol + '//' + location.hostname;
     $('.container').delegate('.folder', 'click', function(e) {
         e.preventDefault();
@@ -14,7 +14,7 @@ $(function() {
     
     function get(url, inFx, force, newState) {
         if (url.substr(url.length - 1) != '/') { url += '/'; }
-        if (init && current === url && !force) { return; }
+        if (init && current[0] === url && !force) { return; }
       
         if (ajax) { ajax.abort(); }
         $('#list .panel-loader').fadeIn(300);
@@ -23,22 +23,22 @@ $(function() {
             function (data) {
                 $('#list .panel-loader').fadeOut(300);
                 if (data.list) {
-                    current = url.split("&")[0];
+                    current = data.current;
                     init = true;
                     
                     var links = '<a href="/' + subDir + '" class="folder" data-in="0">' + rootDir + '</a>', 
                         route = subDir ? '/' + subDir.substring(0, subDir.length - 1) : '';
                     var last = data.parts.pop();
                     for (var i in data.parts) {
-                        route += '/' + data.parts[i];
-                        links += ' / <a href="' + route + '" class="folder" data-in="0">' + data.parts[i] + '</a>';
+                        route += '/' + data.parts[i][0];
+                        links += ' / <a href="' + route + '" class="folder" data-in="0">' + data.parts[i][1] + '</a>';
                     }
-                    links += last ? ' / ' + last : '';
+                    links += last ? ' / ' + last[1] : '';
 
                     var h1 = $('h1');
                     var nh = $('<h1>' + links + '</h1>').hide();
                     
-                    $('#list .panel-heading .panel-title').text(last ? last : rootDir);
+                    $('#list .panel-heading .panel-title').text(last ? last[1] : rootDir);
                     $('#list .panel-heading > span').text(data.info ? data.info : '');
                     
                     h1.parent().append(nh);
@@ -72,13 +72,15 @@ $(function() {
                     
                     $('body,html').animate({scrollTop: 0}, 500);
 
+                    stateChange = false;
                     if (newState !== false) {
                         History.pushState(
-                            {urlPath: current}, 
+                            {urlPath: current[0]}, 
                             getTitle(), 
-                            '/' + subDir.substring(0, subDir.length - 1) + current
+                            '/' + subDir.substring(0, subDir.length - 1) + current[0]
                         );
                     }
+                    stateChange = true;
                 }
             }
         );
@@ -98,9 +100,9 @@ $(function() {
     if (window.location.hash && window.location.hash !== '#' && window.location.hash.substring(0, 4) !== '#./?') {
         var url = window.location.hash.substring(1);
         url = decodeURIComponent(decodeURIComponent(url.split('?')[0].replace('./', '')));
-        if (url.substring(0, 1) != '/') { url = current + '/' + url; }
+        if (url.substring(0, 1) != '/') { url = current[0] + '/' + url; }
         if (url != '/' && url.substring(url.length - 1) == '/') { url = url.substring(0, url.length - 1); }
-        if (url != '' && url != current) {
+        if (url != '' && url != current[0]) {
             History.replaceState(
                 {urlPath: url}, getTitle(url), 
                 '/' + subDir.substring(0, subDir.length - 1) + url
@@ -110,23 +112,24 @@ $(function() {
     } else {
         $('#list').css('overflow', 'hidden').animate({ height: ($('#list table:first').outerHeight() + 41) }, 500, function() {
             $(this).css('overflow', 'visible');
-            if (current !== '/') { 
+            if (current[0] !== '/') { 
                 document.title = getTitle(); 
-                $('#list .panel-heading .panel-title').text(current.split('/').pop()); 
+                $('#list .panel-heading .panel-title').text(current[1].split('/').pop()); 
             }
         });
         orderRows();
         headerResize();
 
         History.replaceState(
-            {urlPath: current},
-            current !== '/' ? getTitle() : document.title, window.location.pathname
+            {urlPath: current[0]},
+            current[0] !== '/' ? getTitle() : document.title, window.location.pathname
         );
     }
 
     History.Adapter.bind(window, 'statechange', function() {
+        if (!stateChange) { return; }
         var State = History.getState();
-        var inFx = State.data.urlPath.length > current.length ? 1 : 0;
+        var inFx = State.data.urlPath.length >= current[0].length ? 1 : 0;
         get(State.data.urlPath, inFx, false, false);
     });
     
@@ -141,7 +144,7 @@ $(function() {
     });
 
     function getTitle(path) {
-        path = path ? path : current;
+        path = path ? path : current[1];
 
         if (path == '/') {
             return rootDir;

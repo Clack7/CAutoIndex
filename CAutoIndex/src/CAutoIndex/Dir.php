@@ -81,16 +81,22 @@ class Dir extends Element
      */
     public function getParts()
     {
-
-        $parts = trim(strtr(
+        $parts = array_filter(explode('/', mb_convert_encoding(trim(strtr(
             $this->_path,
             array(
                 Config::get('explorablePath') => '',
                 DIRECTORY_SEPARATOR => '/',
             )
-        ), '/');
+        ), '/'), 'UTF-8', Config::get('fileSystemEncoding'))));
 
-        return array_filter(explode('/', $parts));
+        foreach ($parts as &$part)  {
+            $part = array(
+                str_replace('%2F', '/', rawurlencode($part)),
+                $part,
+            );
+        }
+
+        return $parts;
     }
 
     /**

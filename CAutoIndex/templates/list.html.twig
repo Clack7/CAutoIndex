@@ -28,7 +28,7 @@
                     <a href="{{ ele.url }}"  data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;imagen" rel="gallery2" class="showImage"><span class="ico-photo"></span></a>
                         {% else %}
                     <a href="{{ ele.url }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;en&nbsp;Iframe" class="showIframe"><span class="ico-iframe"></span></a>
-                    <a href="/{{ Config('subDir') }}_cai/code?path={{ ele.url }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;código&nbsp;de&nbsp;fuente" class="showCode"><span class="ico-code"></span></a>
+                    <a href="/{{ Config('subDir') }}_cai/code?path={{ ele.getUrl(false) }}" data-fancybox-type="iframe" data-fancybox-title="{{ ele.name }}" title="Ver&nbsp;código&nbsp;de&nbsp;fuente" class="showCode"><span class="ico-code"></span></a>
                         {% endif %}
                     <a href="{{ ele.url }}" title="Ejecutar&nbsp;en&nbsp;navegador" target="_blank" class="open"><span class="ico-open"></span></a>
                     {% endif %}

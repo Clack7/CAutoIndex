@@ -75,10 +75,8 @@ abstract class Element
      */
     protected function _setPath($path)
     {
-        $path = utf8_decode($path);
         $ep = Config::get('explorablePath'); $ds = DIRECTORY_SEPARATOR;
 
-        $name   = utf8_encode(basename($path));
         $isLink = is_link($path) || realpath($path) != $this->_convertAbsolutePath($path);
 
         if ($isLink && !realpath($path)) {
@@ -109,7 +107,6 @@ abstract class Element
 
         $this->_path   = $path;
         $this->_isLink = $isLink;
-        $this->_name   = $name;
     }
     
     /**
@@ -138,18 +135,26 @@ abstract class Element
     }
 
     /**
-     * Return relative URL of the element
+     * Return the URL of the element
+     * @param  boolean $subDir add the subdir
+     * @param  boolean $encode URL encoded
      * @return string
      */
-    public function getUrl()
+    public function getUrl($subDir = true, $encode = true)
     {
-        return '/' . Config::get('subDir') . trim(utf8_encode(strtr(
+        $url = mb_convert_encoding('/' . ($subDir ? Config::get('subDir') : '') . trim(strtr(
             $this->_path,
             array(
                 Config::get('explorablePath') => '',
                 DIRECTORY_SEPARATOR => '/',
             )
-        )), '/');
+        ), '/'), 'UTF-8', Config::get('fileSystemEncoding'));
+
+        if ($encode) {
+            $url = str_replace('%2F', '/', rawurlencode($url));
+        }
+
+        return $url;
     } 
 
     /**
@@ -167,6 +172,12 @@ abstract class Element
      */
     public function getName()
     {
+        if ($this->_name === null) {
+            $this->_name  = mb_convert_encoding(array_pop(
+                explode(DIRECTORY_SEPARATOR, $this->_path)
+            ), 'UTF-8', Config::get('fileSystemEncoding'));
+        }
+
         return $this->_name;
     }
 
@@ -263,10 +274,10 @@ abstract class Element
     {
         $ds = DIRECTORY_SEPARATOR;
 
-        $parent = explode('/', trim(str_replace($ds, '/', $path), '/'));
-        array_pop($parent); 
-        $parent = realpath(implode($ds, $parent));
+        $path   = rtrim(str_replace($ds, '/', $path), '/');
+        $parent = realpath(substr($path, 0, strrpos($path, '/')));
+        $name   = array_pop(explode('/', $path));
 
-        return $parent ? $parent . $ds . basename($path) : false;
+        return $parent ? $parent . $ds . $name : false;
     }
 }
