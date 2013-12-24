@@ -17,7 +17,7 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
         $path = mb_convert_encoding($path, Config::get('fileSystemEncoding'), 'UTF-8');
         $dir = new Dir($path, true);
     } catch (\Exception $e) {
-        $app->abort(404, 'File not found.');
+        $app->abort(404, $e->getMessage());
     }
 
     if ($request->isXmlHttpRequest()) {
@@ -27,10 +27,10 @@ $app->get(Config::get('subDir') . '{path}', function(Request $request, $path) us
 
         $count = count($dir->getElements());
         return new JsonResponse(array(
-            'list'  => $list,
-            'parts' => $dir->getParts(),
+            'list'    => $list,
+            'parts'   => $dir->getParts(),
             'current' => array($dir->getUrl(false), $dir->getUrl(false, false)),
-            'info'  => $count . ' elemento' . ($count == 1 ? '' : 's'),
+            'info'    => $count . ' ' . $app['translations'][$app['language']]['element' . ($count == 1 ? '' : 's')],
         ));
     }
     
@@ -54,7 +54,7 @@ $app->get(Config::get('subDir') . '_cai/{action}', function(Request $request, $a
                 $file   = new File($path, true);
                 $source = $file->getSource();
             } catch (\Exception $e) {
-                $app->abort(404, 'File not found.');
+                $app->abort(404, $e->getMessage());
             }
             
             $ext = $file->getExtension();
@@ -64,6 +64,7 @@ $app->get(Config::get('subDir') . '_cai/{action}', function(Request $request, $a
             }
             
             return $app['twig']->render('code.html.twig', array(
+                'file' => $file,
                 'source' => $source,
                 'ext'    => $ext,
             ));

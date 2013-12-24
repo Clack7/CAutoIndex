@@ -22,3 +22,53 @@ $app['ignoreElements'] = array(
  * Filesystem encoding
  */
 $app['fileSystemEncoding'] = 'UTF-8'; //UTF-8, Windows-1252, etc..
+
+/**
+ * Application language
+ */
+$app['language'] = 'es';
+
+/**
+ * Translation messages
+ */
+$app['translations'] = array(
+	'en' => array(
+		'name'          => 'Name',
+		'extension'     => 'Extension',
+		'size'          => 'Size',
+		'element'       => 'Element',
+		'elements'      => 'Elements',
+		'show_iframe'   => 'Show on iframe',
+		'show_source'   => 'Show source code',
+		'show_image'    => 'Show image',
+		'open_browser'  => 'Open with browser',
+		'developed_by'  => 'Developed by',
+		'symlink_error' => 'Invalid symlink.',
+		'empty_dir'     => 'Empty directory.',
+		'server_error'  => 'Internal server error.',
+		'not_found'     => 'Not found.',
+		'back_home'     => 'Back to home.',
+	),
+	'es' => array(
+		'name'          => 'Nombre',
+		'extension'     => 'Extensión',
+		'size'          => 'Tamaño',
+		'element'       => 'Elemento',
+		'elements'      => 'Elementos',
+		'show_iframe'   => 'Ver en iframe',
+		'show_source'   => 'Ver código de fuente',
+		'show_image'    => 'Ver Imagen',
+		'open_browser'  => 'Abrir con el navegador',
+		'developed_by'  => 'Desarrollado por',
+		'symlink_error' => 'Enlace simbolico invalido.',
+		'empty_dir'     => 'Directorio vacio.',
+		'server_error'  => 'Error interno de sistema.',
+		'not_found'     => 'Ubicación inexistente.',
+		'back_home'     => 'Volver al inicio.',
+	),
+	/*
+	'language_key' => array(
+		'message_key' => 'Translation.'
+	),
+	*/
+);

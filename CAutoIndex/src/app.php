@@ -18,6 +18,14 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     	return Config::get($param);
     }));
 
+    $twig->addFilter('trans', new \Twig_SimpleFilter('trans', function($key) use ($app) {
+    	if (!isset($app['translations'][$app['language']][$key])) {
+    		throw new \Exception('Invalid translation key "' . $key . '" for language "' . $app['language'] . '" on /config/options.php.');
+    	}
+    	
+    	return $app['translations'][$app['language']][$key];
+    }));
+
     return $twig;
 }));
 

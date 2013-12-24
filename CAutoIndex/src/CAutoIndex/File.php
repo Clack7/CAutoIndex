@@ -61,7 +61,7 @@ class File extends Element
     public function getSize()
     {
         if ($this->_size === null) {
-            $this->_size = filesize($this->_path);
+            $this->_size = is_file($this->_path) ? filesize($this->_path) : 0;
         }
 
         return $this->_size;

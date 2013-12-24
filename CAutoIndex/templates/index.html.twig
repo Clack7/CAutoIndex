@@ -14,7 +14,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default" id="list">
             <div class="panel-heading">
-                <span class="pull-right">{{ dir.elements|length }} elemento{{ dir.elements | length == 1 ? '' : 's' }}</span>
+                <span class="pull-right">{{ dir.elements | length }} {{ ('element' ~ (dir.elements | length == 1 ? '' : 's')) | trans }}</span>
                 <div class="panel-loader"></div>
                 <h3 class="panel-title">{{ Config('rootName') }}</h3>
             </div>

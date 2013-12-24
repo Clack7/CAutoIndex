@@ -79,6 +79,9 @@ abstract class Element
 
         $isLink = is_link($path) || realpath($path) != $this->_convertAbsolutePath($path);
 
+        $name = explode('/', str_replace('\\', '/', $path));
+        $name = mb_convert_encoding(array_pop($name), 'UTF-8', Config::get('fileSystemEncoding'));
+
         if ($isLink && !realpath($path)) {
             $path = $this->_convertAbsolutePath($path);
         } else {
@@ -107,6 +110,7 @@ abstract class Element
 
         $this->_path   = $path;
         $this->_isLink = $isLink;
+        $this->_name   = $name;
     }
     
     /**
@@ -172,12 +176,6 @@ abstract class Element
      */
     public function getName()
     {
-        if ($this->_name === null) {
-            $this->_name  = mb_convert_encoding(array_pop(
-                explode(DIRECTORY_SEPARATOR, $this->_path)
-            ), 'UTF-8', Config::get('fileSystemEncoding'));
-        }
-
         return $this->_name;
     }
 
@@ -291,7 +289,8 @@ abstract class Element
 
         $path   = rtrim(str_replace($ds, '/', $path), '/');
         $parent = realpath(substr($path, 0, strrpos($path, '/')));
-        $name   = array_pop(explode('/', $path));
+        $name   = explode('/', $path);
+        $name = array_pop($name);
 
         return $parent ? $parent . $ds . $name : false;
     }
