@@ -83,9 +83,9 @@ abstract class Element
         $name = mb_convert_encoding(array_pop($name), 'UTF-8', Config::get('fileSystemEncoding'));
 
         if ($isLink && !realpath($path)) {
-            $path = $this->_convertAbsolutePath($path);
+            $aPath = $this->_convertAbsolutePath($path);
         } else {
-            $path = realpath($path);
+            $aPath = realpath($path);
         }
 
         $ignoreElements = array_merge(array(
@@ -96,19 +96,19 @@ abstract class Element
         $ignored = false;
         foreach ($ignoreElements as $ign) {
             $ign = realpath($ign);
-            if ((is_dir($ign) && strpos($path . $ds, $ign . $ds) !== false) || 
-                $path == $ign) {
+            if ((is_dir($ign) && strpos($aPath . $ds, $ign . $ds) !== false) || 
+                $aPath == $ign) {
                 $ignored = true;
                 break;
             }
         }
         
-        if (!$path || strpos($path, $ep) !== 0 || $ignored || 
-            ($this->isDir() && !is_dir($path))) {
-            throw new \Exception('Invalid path.');
+        if (!$aPath || strpos($aPath, $ep) !== 0 || $ignored || 
+            ($this->isDir() && !is_dir($aPath))) {
+            throw new \Exception('Invalid path "' . $path . '".');
         }
 
-        $this->_path   = $path;
+        $this->_path   = $aPath;
         $this->_isLink = $isLink;
         $this->_name   = $name;
     }

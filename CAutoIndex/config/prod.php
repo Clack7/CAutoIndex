@@ -1,6 +1,7 @@
 <?php
 
 use CAutoIndex\Config;
+use Monolog\Logger;
 use Silex\Provider\MonologServiceProvider;
 
 // include options
@@ -27,7 +28,8 @@ Config::set('sysUrl', '/' . Config::get('subDir') . Config::get('sysDirName') . 
 Config::set('ignoreElements', $app['ignoreElements']);
 Config::set('fileSystemEncoding', $app['fileSystemEncoding']);
 
-
-/*$app->register(new MonologServiceProvider(), array(
+// Error log
+$app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../logs/index_prod.log',
-));*/
+    'monolog.level' => Logger::ERROR,
+));
