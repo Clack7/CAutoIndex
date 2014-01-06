@@ -26,7 +26,7 @@ $app['fileSystemEncoding'] = 'UTF-8'; //UTF-8, Windows-1252, etc..
 /**
  * Application language
  */
-$app['language'] = 'es';
+$app['language'] = 'en'; //'es';
 
 /**
  * Translation messages
